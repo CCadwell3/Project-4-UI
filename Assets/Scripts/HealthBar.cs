@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class HealthBar : MonoBehaviour
 {
@@ -10,17 +7,18 @@ public class HealthBar : MonoBehaviour
     public Image bar;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         bar = GetComponent<Image>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        SetHealthBarColor(gameManager.player.health.health/gameManager.player.health.maxHealth);//pass number to color changer
+        SetHealthBarColor(gameManager.player.health.health / gameManager.player.health.maxHealth);//pass number to color changer
     }
+
     public void SetHealthBarColor(float value)
     {
         bar.fillAmount = value;//set fill ammount for bar

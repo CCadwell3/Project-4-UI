@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class LongSwordPickup : Pickups
 {
     public LongSword sword;
@@ -17,6 +13,7 @@ public class LongSwordPickup : Pickups
     {
         base.Update();
     }
+
     public override void OnPickup(Player player)
     {
         player.EquipWeapon(sword);

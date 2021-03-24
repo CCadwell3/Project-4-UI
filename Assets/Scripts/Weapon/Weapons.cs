@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-
 
 public abstract class Weapons : MonoBehaviour
 {
-    private bool isAttacking = false;//tracker for weather or not to inflict damage
+    public bool isAttacking = false;//tracker for weather or not to inflict damage
 
     public Sprite icon = null;//holder for visuals
 
@@ -16,15 +12,18 @@ public abstract class Weapons : MonoBehaviour
 
     [Header("Projectile Behavior")]
     public Ammo projectilePrefab;
+
     public float projectileSpeed = 25;
     public Ammo thrown;
-    
+
     [Header("IK Points")]
     public Transform rightHandPoint;
+
     public Transform leftHandPoint;
 
     [Header("Events")]
     public UnityEvent OnMainAttackDown;
+
     public UnityEvent OnMainAttackUp;
     public UnityEvent OnAltAttackDown;
     public UnityEvent OnAltAttackUp;
@@ -34,37 +33,45 @@ public abstract class Weapons : MonoBehaviour
 
     private GameObject owner;
     private Transform origin;
-    
+
     // Start is called before the first frame update
     public virtual void Start()
     {
-        pawn = transform.root.GetComponent<Pawn>();//get the root pawn
-        owner = transform.root.gameObject;
-        origin = owner.transform.Find("FirePoint");
+        if (transform.root.GetComponent<Pawn>())
+        {
+            pawn = transform.root.GetComponent<Pawn>();
+            owner = pawn.gameObject;
+            origin = owner.transform.Find("FirePoint");
+        }   
     }
+
     // Update is called once per frame
     public virtual void Update()
     {
-
     }
+
     public virtual void MainAttackDown()
     {
         OnMainAttackDown.Invoke();
         isAttacking = true;
     }
+
     public virtual void MainAttackUp()
     {
         OnMainAttackUp.Invoke();
         isAttacking = false;
     }
+
     public virtual void AltAttackDown()
     {
         OnAltAttackDown.Invoke();
     }
+
     public virtual void AltAttackUp()
     {
         OnAltAttackUp.Invoke();
     }
+
     //Longsword
     public virtual void LongSwordAttackStart()
     {
@@ -73,6 +80,7 @@ public abstract class Weapons : MonoBehaviour
             pawn.anim.SetBool("LongSwordAttack", true);//play attack animation
         }
     }
+
     public virtual void LongSwordAttackEnd()
     {
         if (pawn.anim.GetBool("LongSwordAttack"))//if attacking
@@ -84,11 +92,13 @@ public abstract class Weapons : MonoBehaviour
             //nothing
         }
     }
+
     public virtual void LongSwordAltStart()
     {
         //block
         pawn.anim.SetBool("SwordBlock", true);//start block anim
     }
+
     public virtual void LongSwordAltEnd()
     {
         //return to normal
@@ -106,6 +116,7 @@ public abstract class Weapons : MonoBehaviour
             pawn.anim.SetBool("DaggerAttack", true);//play attack animation
         }
     }
+
     public virtual void DaggerAttackEnd()
     {
         if (pawn.anim.GetBool("DaggerAttack"))//if attacking
@@ -113,10 +124,12 @@ public abstract class Weapons : MonoBehaviour
             pawn.anim.SetBool("DaggerAttack", false);//stop attack animation
         }
     }
+
     public virtual void DaggerAltStart()
     {
         //nothing this attack happens on button up
     }
+
     public virtual void DaggerAltEnd()
     {
         //Throw
@@ -131,6 +144,7 @@ public abstract class Weapons : MonoBehaviour
             pawn.anim.SetBool("SpearAttack", true);//play attack animation
         }
     }
+
     public virtual void SpearAttackEnd()
     {
         if (pawn.anim.GetBool("SpearAttack"))//if attacking
@@ -138,17 +152,21 @@ public abstract class Weapons : MonoBehaviour
             pawn.anim.SetBool("SpearAttack", false);//stop attack animation
         }
     }
+
     public virtual void SpearAltStart()
     {
         //throw
         Throw(origin);
     }
+
     public virtual void SpearAltEnd()
     {
         //nothing -- This fires on attack down
     }
+
     public void Throw(Transform origin)
     {
+        
         Ammo thrown = Instantiate(projectilePrefab, origin.position, origin.rotation, origin) as Ammo;//create projectile object
         Ammo thrownScript = thrown.GetComponent<Ammo>();//get component from new projectile
         thrown.gameObject.layer = gameObject.layer;//assign thrown object to parent objecst layer
@@ -159,22 +177,25 @@ public abstract class Weapons : MonoBehaviour
     //collision events
     public virtual void OnCollisionEnter(Collision collision)
     {
-
     }
+
     public virtual void OnTriggerEnter(Collider thingWeHit)//make sure to use collider and not collision.  Pass in weapon damage from weapon
     {
-        if (isAttacking == true)
+        if (GetComponentInParent<Health>().isDead == false)//make sure attacker is still alive.
         {
-            if (thingWeHit.transform.root.GetComponent<Pawn>())//if we run into a pawn object
+            if (isAttacking == true)
             {
-                if (thingWeHit.GetComponent<Health>())//if target has a health component
+                if (thingWeHit.transform.root.GetComponent<Pawn>())//if we run into a pawn object
                 {
-                    Health health = thingWeHit.GetComponent<Health>();//reference for health component of object we are hitting
-                    health.Damage(weaponDamage);//call objects damage function, give it the weapon damage of equipped weapon
-                }
-                else
-                {
-                    //do nothing
+                    if (thingWeHit.GetComponent<Health>())//if target has a health component
+                    {
+                        Health health = thingWeHit.GetComponent<Health>();//reference for health component of object we are hitting
+                        health.Damage(weaponDamage);//call objects damage function, give it the weapon damage of equipped weapon
+                    }
+                    else
+                    {
+                        //do nothing
+                    }
                 }
             }
         }

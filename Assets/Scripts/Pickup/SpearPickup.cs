@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class SpearPickup : Pickups
 {
     public Spear spear;
@@ -11,15 +7,16 @@ public class SpearPickup : Pickups
     {
         base.Start();
     }
+
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
     }
+
     public override void OnPickup(Player player)
     {
         player.EquipWeapon(spear);
         base.OnPickup(player);
     }
-
 }

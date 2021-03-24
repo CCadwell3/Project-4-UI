@@ -1308,10 +1308,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  ragTimer: 10
+  ragTimer: 3
   health: 100
-  maxHealth: 100
+  maxHealth: 400
   percent: 0
+  isDead: 0
   aud: {fileID: 9002613743020452615}
   deathNoise: {fileID: 8300000, guid: 22ad7bd5c2dcc954a9e096288c9a6fa6, type: 3}
 --- !u!114 &3473654340518461549
@@ -1347,7 +1348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c690c63e790c7f4d8a1b987dad05d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bar: {fileID: 0}
+  bar: {fileID: 356648555610583554, guid: 28f642bd51e8c1a40914957c8ebb5cd4, type: 3}
   health: {fileID: 0}
 --- !u!54 &7638177962110571071
 Rigidbody:
@@ -1360,7 +1361,7 @@ Rigidbody:
   m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112

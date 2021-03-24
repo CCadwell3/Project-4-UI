@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ammo : Weapons
 {
     [Header("Projectile Behavior")]
     public float ttl = 5;
+
     public float projectileDamage = 25;
     public Rigidbody rbAmmo;
     public Transform from;
@@ -21,9 +20,10 @@ public class Ammo : Weapons
 
     // Update is called once per frame
     public override void Update()
-    { 
+    {
         base.Update();
     }
+
     public override void OnTriggerEnter(Collider other)
     {
         GameObject collidedWith = other.gameObject;//reference what we hit

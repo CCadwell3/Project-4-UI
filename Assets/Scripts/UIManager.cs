@@ -1,33 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
     private GameManager gameManager;
+
     [SerializeField]
     private Image weaponIcon;
+
     [SerializeField]
     private Sprite unarmed;
+
     [SerializeField]
     private Text lifeText;
+
     [Header("Pause Screen")]
     public Image pauseScreen;
+
     public Button resumeButton;
     public Button quitButton;
     public Text pauseText;
     public Text resumeButtonText;
     public Text quitButtonText;
-    
+
     [Header("Game Over Screen")]
     public Text gameOverText;
+
     public Button gameOverResumeButton;
     public Text gameOverResumeText;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();//find the GM
 
@@ -41,11 +44,10 @@ public class UIManager : MonoBehaviour
         gameOverText.gameObject.SetActive(false);
         gameOverResumeButton.gameObject.SetActive(false);
         gameOverResumeText.gameObject.SetActive(false);
-
-}
+    }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         lifeText.text = string.Format("X {0}", gameManager.lives);//update lives text
 
@@ -58,7 +60,6 @@ public class UIManager : MonoBehaviour
                 weaponIcon.overrideSprite = unarmed;
             }
         }
-        
     }
 
     public void PauseMenu()
@@ -70,10 +71,12 @@ public class UIManager : MonoBehaviour
         pauseText.gameObject.SetActive(true);
         resumeButtonText.gameObject.SetActive(true);
         quitButtonText.gameObject.SetActive(true);
-        
     }
+
     public void ResumeGame()
     {
+        //resume game
+        //hide again
         pauseScreen.gameObject.SetActive(false);
         resumeButton.gameObject.SetActive(false);
         quitButton.gameObject.SetActive(false);
@@ -81,11 +84,9 @@ public class UIManager : MonoBehaviour
         resumeButtonText.gameObject.SetActive(false);
         quitButtonText.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(false);
-        gameManager.Unpause();//resume game
-        //hide again
-        
-
+        gameManager.Unpause();
     }
+
     public void GameOver()
     {
         //show game over screen
@@ -96,6 +97,15 @@ public class UIManager : MonoBehaviour
         gameOverResumeButton.gameObject.SetActive(true);
         gameOverResumeText.gameObject.SetActive(true);
     }
-
-
+    public void GameOverResume()
+    {
+        //resume game
+        //hide again
+        pauseScreen.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(false);
+        quitButtonText.gameObject.SetActive(false);
+        gameOverResumeButton.gameObject.SetActive(false);
+        gameOverResumeText.gameObject.SetActive(false);
+    }
 }

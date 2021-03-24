@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LongSword : Weapons
 {
@@ -10,27 +7,31 @@ public class LongSword : Weapons
     {
         base.Start();
     }
+
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
     }
+
     public override void MainAttackDown()
     {
         base.MainAttackDown();
     }
+
     public override void MainAttackUp()
     {
         base.MainAttackUp();
     }
+
     public override void AltAttackDown()
     {
         Debug.Log("Alt down sent up the chain");
         base.AltAttackDown();
     }
+
     public override void AltAttackUp()
     {
         base.AltAttackUp();
     }
 }
-

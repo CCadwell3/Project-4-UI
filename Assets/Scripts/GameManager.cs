@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     [Header("SpawnPoints")]
     public Transform[] spearSpawn;
+
     public Transform[] longSwordSpawn;
     public Transform[] daggerSpawn;
     public Transform[] harmSpawn;
@@ -25,23 +23,33 @@ public class GameManager : MonoBehaviour
 
     [Header("Spawn Timing")]
     public float playerSpawnDelay = 5;
+
     [SerializeField]
     private float nextPlayerSpawn;
+
     public float enemySpawnDelay = 5;
+
     [SerializeField]
     private float nextEnemySpawn;
+
     public float weaponSpawnDelay = 5;
+
     [SerializeField]
     private float nextWeaponSpawn;
+
     public float buffSpawnDelay = 5;
+
     [SerializeField]
     private float nextBuffSpawn;
+
     public float debuffSpawnDelay = 5;
+
     [SerializeField]
     private float nextDebuffSpawn;
 
     [Header("Spawn max numbers")]
     public float maxSpears = 1;
+
     public float maxSwords = 1;
     public float maxDaggers = 1;
     public float maxEnemies = 1;
@@ -52,13 +60,14 @@ public class GameManager : MonoBehaviour
     public int lives = 4;
 
     //arrays to hold object counts
-    GameObject[] spears;
-    GameObject[] longSwords;
-    GameObject[] daggers;
-    GameObject[] harms;
-    GameObject[] heals;
-    GameObject[] enemies;
-    GameObject[] players;
+    private GameObject[] spears;
+
+    private GameObject[] longSwords;
+    private GameObject[] daggers;
+    private GameObject[] harms;
+    private GameObject[] heals;
+    private GameObject[] enemies;
+    private GameObject[] players;
 
     private int rnd;
     public static GameManager instance { get; private set; }
@@ -69,11 +78,11 @@ public class GameManager : MonoBehaviour
     [Header("Events")]
     public UnityEvent onPause;
     public UnityEvent onResume;
+    public UnityEvent onGameOverResume;
     public UnityEvent onGameOver;
 
-
     //Singleton  only one instance
-    void Awake()
+    private void Awake()
     {
         //make sure there is always only 1 instance
         if (GameManager.instance == null)
@@ -86,8 +95,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         //load prefabs into objects
         LongSwordPre = Resources.Load("Prefabs/PULongsword");
@@ -98,6 +108,7 @@ public class GameManager : MonoBehaviour
         EnemyPre = Resources.Load("Prefabs/Vampire");
         PlayerPre = Resources.Load("Prefabs/Player");
     }
+
     // Update is called once per frame
     private void Update()
     {
@@ -105,7 +116,7 @@ public class GameManager : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();//store enemies in gm
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         //get a count of objects
         spears = GameObject.FindGameObjectsWithTag("Spear");
@@ -121,7 +132,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject Player = (GameObject)Instantiate(PlayerPre, playerSpawn.position, playerSpawn.rotation);//spawn player
             player = FindObjectOfType<Player>();//reference player object
-            lives--;//subtract a life  
+            lives--;//subtract a life
         }
         else if (player == null && lives == 0)//no player, and no lives left
         {
@@ -188,14 +199,15 @@ public class GameManager : MonoBehaviour
             }
             nextEnemySpawn = Time.time + enemySpawnDelay;//reset timer for next spawn
         }
-
     }
+
     public void Pause()
     {
         Time.timeScale = 0f;//stop time
         paused = true; //set paused to true
         instance.onPause.Invoke();//call onpause event
     }
+
     public void Unpause()
     {
         Time.timeScale = 1.0f;//resume normal time
@@ -218,11 +230,12 @@ public class GameManager : MonoBehaviour
         paused = true; //set paused to true
         instance.onGameOver.Invoke();//call gameover
     }
+
     public void GameOverResume()
     {
         Time.timeScale = 1.0f;//resume normal time
         paused = false;//paused bool off
         lives = 4;//reset lives
-        instance.onResume.Invoke();//resume event
+        instance.onGameOverResume.Invoke();//resume event
     }
 }

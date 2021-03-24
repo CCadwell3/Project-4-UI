@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(GameObject))]
 [RequireComponent(typeof(Animator))]
-
-
 public class Player : Pawn
 {
     //serialized so this can be accessed in editor
@@ -25,6 +21,7 @@ public class Player : Pawn
 
     //movement
     private float moveRight;
+
     private float moveUp;
 
     [SerializeField]
@@ -35,14 +32,17 @@ public class Player : Pawn
         grounded = true;//set grounded to true (say we are on the ground)
         base.Awake();
     }
+
     public override void Start()
     {
         base.Start();
     }
+
     public override void Update()
     {
         base.Update();
     }
+
     public override void Move(Vector3 moveDirection)
     {
         //convert from "stick space" to worldspace so movement is based on player rotation
@@ -56,31 +56,34 @@ public class Player : Pawn
 
         base.Move(moveDirection);//call move from parent
     }
+
     public override void RotateTowards(Vector3 targetPoint)
     {
-        //create local var for rotation quaternion
-        Quaternion targetRotation;
+        if (health.isDead == false)//only do this if we are still alive
+        {
+            //create local var for rotation quaternion
+            Quaternion targetRotation;
 
-        //find rotation to point
-        Vector3 vectorToTarget = targetPoint - transform.position; //endpoint - startpoint  where we are going to look, and where we are looking
-        targetRotation = Quaternion.LookRotation(vectorToTarget, Vector3.up);//determine where to look
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);//combine the previous steps, and look based on frames
-        base.RotateTowards(targetPoint);
+            //find rotation to point
+            Vector3 vectorToTarget = targetPoint - transform.position; //endpoint - startpoint  where we are going to look, and where we are looking
+            targetRotation = Quaternion.LookRotation(vectorToTarget, Vector3.up);//determine where to look
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);//combine the previous steps, and look based on frames
+            base.RotateTowards(targetPoint);
+        }
     }
+
     public override void Jump(Vector3 moveDirection)
     {
-
         if (grounded == true)//make sure we are on the ground
         {
-
             rbpawn.velocity = new Vector3(moveDirection.x, jumpForce, moveDirection.z);//add y axis jumpforce to current movement
-            
+
             anim.SetTrigger("Jump");//tell the animation to play
 
             grounded = false;//set check flag to false (because we should be in the air)
-
         }
     }
+
     public override void EquipWeapon(Weapons weaponToEquip)
     {
         if (!equippedWeapon)
@@ -90,7 +93,6 @@ public class Player : Pawn
             equippedWeapon.gameObject.layer = gameObject.layer;//assign weapon to parents layer                  -----new
             equippedWeapon.transform.localPosition = weaponToEquip.transform.localPosition;//position weapon
             equippedWeapon.transform.localRotation = weaponToEquip.transform.localRotation;//rotate weapon
-
         }
         else
         {
@@ -103,6 +105,7 @@ public class Player : Pawn
         }
         base.EquipWeapon(weaponToEquip);
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("ground"))//if the item collided with has the tag "ground"

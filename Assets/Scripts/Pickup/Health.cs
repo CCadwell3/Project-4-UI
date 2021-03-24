@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,36 +6,46 @@ public class Health : Pickups
     [Header("Events")]
     [SerializeField, Tooltip("Raised when object is healed")]
     private UnityEvent onHeal;
+
     [SerializeField, Tooltip("Raised when object is damaged")]
     private UnityEvent onDamage;
+
     [SerializeField, Tooltip("Raised when object dies")]
     private UnityEvent onDie;
+
     [SerializeField, Tooltip("Seconds to ragdoll for")]
     private int ragTimer = 5;
 
     [SerializeField, Tooltip("Current Health")]
     public float health;
+
     public float maxHealth = 100;
     public float percent;
 
     private float overKill;
     private float overHeal;
 
+    public bool isDead = false;
+
     //death sound
     public AudioSource aud;
+
     public AudioClip deathNoise;
+
     // Start is called before the first frame update
     public override void Start()
     {
         health = maxHealth;//give object some life
         base.Start();
     }
+
     // Update is called once per frame
     public override void Update()
     {
         percent = health / maxHealth;
         base.Update();
     }
+
     //how to handle damage
     public void Damage(float damage)
     {
@@ -62,6 +70,7 @@ public class Health : Pickups
             onDie.Invoke();//call onDie
         }
     }
+
     //how to handle healing
     public void Heal(float heal)
     {
@@ -79,9 +88,11 @@ public class Health : Pickups
         SendMessage("OnHeal", SendMessageOptions.DontRequireReceiver);//tell every object this is attched to to look for its onDie method no error if not found
         onHeal.Invoke();
     }
+
     public void Death()
     {
         //aud.PlayOneShot(deathNoise) ;//play death sound
+        isDead = true;//let other things know this is dead.
         GameObject.Destroy(this.gameObject, ragTimer);//destroy game object after set seconds seconds
     }
 }

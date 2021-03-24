@@ -1517,7 +1517,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 129
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: e3424774d546e6a47b870404d94c5028, type: 2}
   m_TargetDisplay: 0
@@ -2447,9 +2447,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1471288204}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ResumeGame
+      - m_Target: {fileID: 1796239345}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: GameOverResume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2999,7 +2999,7 @@ MonoBehaviour:
   maxEnemies: 5
   maxBuffs: 1
   maxDebuffs: 1
-  lives: 3
+  lives: 2
   paused: 0
   player: {fileID: 2969317966029576791, guid: ca11b1d7b2e1ed446b5a9faf5120f31b, type: 3}
   enemy: {fileID: 0}
@@ -3024,6 +3024,21 @@ MonoBehaviour:
       - m_Target: {fileID: 1471288204}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onGameOverResume:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1471288204}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: GameOverResume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3083,10 +3098,11 @@ MonoBehaviour:
   onDie:
     m_PersistentCalls:
       m_Calls: []
-  ragTimer: 10
+  ragTimer: 3
   health: 0
   maxHealth: 100
   percent: 0
+  isDead: 0
   aud: {fileID: 0}
   deathNoise: {fileID: 0}
 --- !u!1 &1884382216

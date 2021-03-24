@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Pawn
@@ -12,16 +10,19 @@ public class Enemy : Pawn
     private float jumpForce;
 
     public Health health;
+
     [SerializeField]
     private Drops drops;
 
     [SerializeField]
     private Weapons[] StartingWeapons;
+
     //vars for jumping
     private bool grounded;
 
     //movement
     private float moveRight;
+
     private float moveUp;
 
     [SerializeField]
@@ -33,16 +34,19 @@ public class Enemy : Pawn
         grounded = true;//set grounded to true (say we are on the ground)
         RagOff();
         int selection = Random.Range(0, (StartingWeapons.Length - 1));//generate random number up to weapons length
-        EquipWeapon(StartingWeapons[selection]);//use random number to assign a weapon to enemy 
+        EquipWeapon(StartingWeapons[selection]);//use random number to assign a weapon to enemy
     }
+
     public override void Start()
     {
         base.Start();
     }
+
     public override void Update()
     {
         base.Update();
     }
+
     public override void Move(Vector3 moveDirection)
     {
         //convert from "stick space" to worldspace so movement is based on player rotation
@@ -56,9 +60,9 @@ public class Enemy : Pawn
 
         base.Move(moveDirection);//call move from parent
     }
+
     public override void Jump(Vector3 moveDirection)
     {
-
         if (grounded == true)//make sure we are on the ground
         {
             grounded = false;//set check flag to false (because we should be in the air)
@@ -66,6 +70,7 @@ public class Enemy : Pawn
             rbpawn.velocity = new Vector3(moveDirection.x, jumpForce, moveDirection.z);//add y axis jumpforce to current movement
         }
     }
+
     public override void EquipWeapon(Weapons weaponToEquip)
     {
         if (!equippedWeapon)
@@ -86,10 +91,9 @@ public class Enemy : Pawn
             equippedWeapon.transform.localRotation = weaponToEquip.transform.localRotation;//rotate weapon
         }
 
-
-
         base.EquipWeapon(weaponToEquip);
     }
+
     //collision detection (right now to check if we are on the ground or not)
     private void OnCollisionEnter(Collision collision)
     {
@@ -99,5 +103,4 @@ public class Enemy : Pawn
             grounded = true;//set flag to true
         }
     }
-
 }

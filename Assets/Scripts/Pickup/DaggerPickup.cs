@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class DaggerPickup : Pickups
 {
     public Dagger dagger;
@@ -11,11 +7,13 @@ public class DaggerPickup : Pickups
     {
         base.Start();
     }
+
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
     }
+
     public override void OnPickup(Player player)
     {
         player.EquipWeapon(dagger);

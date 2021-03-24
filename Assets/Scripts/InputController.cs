@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputController : Controller
 {
     //store camera following player
     private Camera Cam;
-    
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -23,7 +21,7 @@ public class InputController : Controller
 
         //call rotate towards mouse
         pawn.RotateTowards(GetMousePosition());
-        
+
         if (Input.GetButtonDown("Jump"))
         {
             pawn.Jump(pawn.rbpawn.velocity);//call jump function using current movement
@@ -35,7 +33,6 @@ public class InputController : Controller
                 //Main attack start
                 pawn.equippedWeapon.MainAttackDown();
             }
-       
         }
         if (Input.GetButtonUp("Fire1"))
         {
@@ -44,7 +41,6 @@ public class InputController : Controller
                 //Main attack end
                 pawn.equippedWeapon.MainAttackUp();
             }
-            
         }
         if (Input.GetButtonDown("Fire2"))
         {
@@ -61,7 +57,6 @@ public class InputController : Controller
                 //Secondary end
                 pawn.equippedWeapon.AltAttackUp();
             }
-            
         }
         if (Input.GetKeyDown("p") && GameManager.instance.paused == false)
         {
@@ -74,6 +69,7 @@ public class InputController : Controller
 
         base.Update();//run update from controller
     }
+
     private Vector3 GetMousePosition()
     {
         //create vector

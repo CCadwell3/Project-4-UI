@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
 public class Dagger : Weapons
 {
     // Start is called before the first frame update
@@ -10,23 +5,28 @@ public class Dagger : Weapons
     {
         base.Start();
     }
+
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
     }
+
     public override void MainAttackDown()
     {
         base.MainAttackDown();
     }
+
     public override void MainAttackUp()
     {
         base.MainAttackUp();
     }
+
     public override void AltAttackDown()
     {
         base.AltAttackDown();
     }
+
     public override void AltAttackUp()
     {
         base.AltAttackUp();

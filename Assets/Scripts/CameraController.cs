@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 public class CameraController : MonoBehaviour
 {
@@ -11,15 +8,15 @@ public class CameraController : MonoBehaviour
     private GameManager gameManager;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (gameManager.paused )//if game manager is paused
+        if (gameManager.paused)//if game manager is paused
         {
             return;//exit loop
         }
@@ -31,7 +28,5 @@ public class CameraController : MonoBehaviour
         {
             //do nothing
         }
-
     }
-
 }
